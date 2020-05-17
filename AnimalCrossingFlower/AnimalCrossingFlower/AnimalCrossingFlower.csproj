@@ -96,6 +96,7 @@
       <DependentUpon>DialogProgress.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalTool.cs" />
+    <Compile Include="Helper\FlowerHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -106,8 +107,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\BaseModel.cs" />
-    <Compile Include="Model\ColorDic.cs" />
     <Compile Include="Model\MyFlower.cs" />
     <Compile Include="Pages\PageParent.xaml.cs">
       <DependentUpon>PageParent.xaml</DependentUpon>

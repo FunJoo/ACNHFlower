@@ -51,6 +51,85 @@
             </Grid>
         </materialDesign:ColorZone>
 
+        <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                             Grid.Row="1"
+                             Grid.Column="1"
+                             Width="{Binding ElementName=GridParentCard,Path=ActualWidth}"
+                             Height="{Binding ElementName=GridParentCard,Path=ActualHeight}">
+        <Grid x:Name="GridParentCard"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Background="AliceBlue"
+              Width="200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+                <StackPanel x:Name="StackPanelCardLeft"
+                            HorizontalAlignment="Center"
+                            Margin="2,5,0,0">
+                    <Image Source="/Assets/CosmosRed.png"
+                           Height="60"
+                           HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="TextBlockNameLeft"
+                               Text="波斯菊 红色"
+                               Margin="0,2"
+                               FontSize="12"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="TextBlockGeneLeft"
+                               Text="RRYYSS"
+                               Margin="0,2"
+                               FontSize="10"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel x:Name="StackPanelCardRight"
+                            HorizontalAlignment="Center"
+                            Margin="0,5,2,0"
+                            Grid.Column="1">
+                    <Image Source="/Assets/CosmosWhite.png"
+                           Height="60"
+                           HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="TextBlockNameRight"
+                               Text="波斯菊 白色"
+                               Margin="0,2"
+                               FontSize="12"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="TextBlockGeneRight"
+                               Text="RRYYSS"
+                               Margin="0,2"
+                               FontSize="10"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel x:Name="StackPanelChild"
+                        Margin="5"
+                       Grid.Row="1"
+                       Grid.ColumnSpan="2"
+                        Orientation="Vertical">
+                    <Border x:Name="BorderCard"
+                            Background="{DynamicResource MaterialDesignDivider}"
+                            Height="2"
+                            HorizontalAlignment="Stretch"
+                            SnapsToDevicePixels="True" />
+                    <TextBlock Text="后代基因型："
+                           FontSize="12"/>
+                <TextBlock x:Name="TextBlockChild"
+                       FontSize="10"
+                       Text="AAaaAA AAaaAA AAaaAA  AAaaAA AAaaAA AAaaAA AAaaAA AAaaAA AAaaAA"
+                       TextWrapping="Wrap"/>
+            </StackPanel>
+
+            
+
+        </Grid>
+        </materialDesign:Card>
+
         <ListView x:Name="ListViewParent"
                   Width="Auto"
                   Height="Auto"

@@ -1,4 +1,5 @@
-﻿using AnimalCrossingFlower.Model;
+﻿using AnimalCrossingFlower.Helper;
+using AnimalCrossingFlower.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,22 +28,32 @@ namespace AnimalCrossingFlower.Pages
             BindFlower();
             BindGene();
         }
-
-        private BaseModel.FlowerType SelectedFlower;
-        private BaseModel.MyColor SelectedColor;
-
-        private List<ColorDic> ListColorDic;
-        private List<ColorDic> SelectedColorDic;
+        /// <summary>
+        /// 设置了哪种花朵
+        /// </summary>
+        private MyFlower.FlowerType SelectedFlower;
+        /// <summary>
+        /// 设置了哪种花色
+        /// </summary>
+        private MyFlower.MyColor SelectedColor;
+        /// <summary>
+        /// 所设置花朵的所有ColorDic
+        /// </summary>
+        private List<MyFlower> ListColorDic;
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<MyFlower> SelectedColorDic;
         private List<string> ListColor;
         private List<string> ListColorName;
 
         private void BindFlower()
         {
             List<string> Flowers = new List<string>();
-            foreach (int i in Enum.GetValues(typeof(BaseModel.FlowerType)))
+            foreach (int i in Enum.GetValues(typeof(MyFlower.FlowerType)))
             {
                 if (i == 0) continue;
-                Flowers.Add(GlobalTool.FlowerNameShow[(BaseModel.FlowerType)i]);
+                Flowers.Add(FlowerHelper.FlowerNameShow[(MyFlower.FlowerType)i]);
             }
             ComboBoxChoose.ItemsSource = Flowers;
             ComboBoxChoose.SelectionChanged += GroupChanged;
@@ -54,9 +65,9 @@ namespace AnimalCrossingFlower.Pages
         private void BindGene()
         {
             List<string> Genes = new List<string>();
-            foreach(int i in Enum.GetValues(typeof(BaseModel.Gene)))
+            foreach(int i in Enum.GetValues(typeof(MyFlower.Gene)))
             {
-                if (i ==0 || i > 3) Genes.Add(((BaseModel.Gene)i).ToString());
+                if (i ==0 || i > 3) Genes.Add(((MyFlower.Gene)i).ToString());
             }
             ComboBoxA1.ItemsSource = Genes;
             ComboBoxA2.ItemsSource = Genes;
@@ -81,12 +92,12 @@ namespace AnimalCrossingFlower.Pages
             {
                 case "ComboBoxChoose":
                     {
-                        SelectedFlower = (BaseModel.FlowerType)cb.SelectedIndex + 1;
+                        SelectedFlower = (MyFlower.FlowerType)cb.SelectedIndex + 1;
 
-                        TextBlockType.Text = GlobalTool.FlowerNameShow[SelectedFlower];
+                        TextBlockType.Text = FlowerHelper.FlowerNameShow[SelectedFlower];
 
-                        ListColorDic = new List<ColorDic>();
-                        ListColorDic = ColorDic.GetColorDic(SelectedFlower);
+                        ListColorDic = new List<MyFlower>();
+                        ListColorDic = FlowerHelper.GetFlowerPart(SelectedFlower);
 
                         ListColor = new List<string>();
                         ListColorName = new List<string>();
@@ -97,8 +108,8 @@ namespace AnimalCrossingFlower.Pages
                             if (!ListColor.Contains(a.Color) && a.Color != "Unknown" )
                             {
                                 ListColor.Add(a.Color);
-                                BaseModel.MyColor mc = (BaseModel.MyColor)Enum.Parse(typeof(BaseModel.MyColor), a.Color);
-                                ListColorName.Add(GlobalTool.ColorNameShow[mc]);
+                                MyFlower.MyColor mc = (MyFlower.MyColor)Enum.Parse(typeof(MyFlower.MyColor), a.Color);
+                                ListColorName.Add(FlowerHelper.ColorNameShow[mc]);
                             }
                         }
 
@@ -115,14 +126,14 @@ namespace AnimalCrossingFlower.Pages
                     {
                         if (cb.SelectedIndex == 0) return;
 
-                        SelectedColor = (BaseModel.MyColor)Enum.Parse(typeof(BaseModel.MyColor), ListColor[cb.SelectedIndex]);
+                        SelectedColor = (MyFlower.MyColor)Enum.Parse(typeof(MyFlower.MyColor), ListColor[cb.SelectedIndex]);
 
-                        TextBlockColor.Text = GlobalTool.ColorNameShow[SelectedColor];
-                        TextBlockColor.Foreground = new SolidColorBrush(GlobalTool.ColorShow[SelectedColor]);
+                        TextBlockColor.Text = FlowerHelper.ColorNameShow[SelectedColor];
+                        TextBlockColor.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[SelectedColor]);
                         ImageFlower.Source = new BitmapImage(new Uri("/Assets/" + SelectedFlower.ToString() + SelectedColor.ToString() + ".png", UriKind.Relative));
 
                         string s = "";
-                        SelectedColorDic = new List<ColorDic>();
+                        SelectedColorDic = new List<MyFlower>();
                         foreach(var a in ListColorDic)
                         {
                             if (a.Color == ListColor[cb.SelectedIndex])
@@ -146,21 +157,21 @@ namespace AnimalCrossingFlower.Pages
                         int a2 = ComboBoxA2.SelectedIndex;
                         int a3 = ComboBoxA3.SelectedIndex;
                         int a4 = ComboBoxA4.SelectedIndex;
-                        int aa1 = (int)(BaseModel.Gene)Enum.Parse(typeof(BaseModel.Gene), ComboBoxA1.SelectedItem.ToString());
-                        int aa2 = (int)(BaseModel.Gene)Enum.Parse(typeof(BaseModel.Gene), ComboBoxA2.SelectedItem.ToString());
-                        int aa3 = (int)(BaseModel.Gene)Enum.Parse(typeof(BaseModel.Gene), ComboBoxA3.SelectedItem.ToString());
-                        int aa4 = (int)(BaseModel.Gene)Enum.Parse(typeof(BaseModel.Gene), ComboBoxA4.SelectedItem.ToString());
+                        int aa1 = (int)(MyFlower.Gene)Enum.Parse(typeof(MyFlower.Gene), ComboBoxA1.SelectedItem.ToString());
+                        int aa2 = (int)(MyFlower.Gene)Enum.Parse(typeof(MyFlower.Gene), ComboBoxA2.SelectedItem.ToString());
+                        int aa3 = (int)(MyFlower.Gene)Enum.Parse(typeof(MyFlower.Gene), ComboBoxA3.SelectedItem.ToString());
+                        int aa4 = (int)(MyFlower.Gene)Enum.Parse(typeof(MyFlower.Gene), ComboBoxA4.SelectedItem.ToString());
 
                         if (
-                            (a1 > 0 && a2 > 0 && a3 > 0 && SelectedFlower != BaseModel.FlowerType.Roses)
+                            (a1 > 0 && a2 > 0 && a3 > 0 && SelectedFlower != MyFlower.FlowerType.Roses)
                             ||
                             (a1 > 0 && a2 > 0 && a3 > 0 && a4>0)
                             )
                         {
-                            ColorDic cd = new ColorDic();
+                            MyFlower cd = new MyFlower();
                             foreach (var a in ListColorDic)
                             {
-                                if (SelectedFlower == BaseModel.FlowerType.Roses)
+                                if (SelectedFlower == MyFlower.FlowerType.Roses)
                                 {
                                     if (a.A1 == aa1.ToString() && a.A2 == aa2.ToString() && a.A3 == aa3.ToString() && a.A4 == aa4.ToString())
                                     {
@@ -179,8 +190,8 @@ namespace AnimalCrossingFlower.Pages
                                     
                             }
                             TextBlockGene.Text = cd.GetGeneName();
-                            TextBlockColor.Text = GlobalTool.ColorNameShow[(BaseModel.MyColor)Enum.Parse(typeof(BaseModel.MyColor), cd.Color)];
-                            TextBlockColor.Foreground = new SolidColorBrush(GlobalTool.ColorShow[(BaseModel.MyColor)Enum.Parse(typeof(BaseModel.MyColor), cd.Color)]);
+                            TextBlockColor.Text = FlowerHelper.ColorNameShow[(MyFlower.MyColor)Enum.Parse(typeof(MyFlower.MyColor), cd.Color)];
+                            TextBlockColor.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[(MyFlower.MyColor)Enum.Parse(typeof(MyFlower.MyColor), cd.Color)]);
 
                             string path =
                                 cd.Color == "Unknown" ?
@@ -199,6 +210,16 @@ namespace AnimalCrossingFlower.Pages
             switch (senderName)
             {
                 case "ButtonSearch":
+                    {
+                        if (CheckBoxColor.IsChecked == true)
+                        {
+
+                        }
+                        if(CheckBoxGene.IsChecked == true)
+                        {
+
+                        }
+                    }
                     break;
             }
         }
@@ -220,7 +241,8 @@ namespace AnimalCrossingFlower.Pages
                 case "CheckBoxGene":
                     CheckBoxColor.IsChecked = false;
                     ComboBoxColor.SelectedIndex = 0;
-                    if (SelectedFlower != BaseModel.FlowerType.Roses) ComboBoxA4.IsEnabled = false;
+                    if (SelectedFlower != MyFlower.FlowerType.Roses) ComboBoxA4.IsEnabled = false;
+                    else ComboBoxA4.IsEnabled = true;
                     break;
             }
         }

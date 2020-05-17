@@ -1,28 +1,100 @@
-﻿using System;
+﻿using AnimalCrossingFlower.Helper;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace AnimalCrossingFlower.Model
 {
-    class MyFlower : BaseModel
+    class MyFlower
     {
-        public MyFlower(FlowerType flower, Gene a1, Gene a2, Gene a3, Gene a4 = Gene.Unknown)
+        private int id;
+        public string ID
         {
-            MyType = flower;
-            A1 = a1;
-            A2 = a2;
-            A3 = a3;
-            A4 = a4;
+            get { return id.ToString(); }
+            set { int.TryParse(value, out id); }
+        }
+        private int a1;
+        public string A1
+        {
+            get { return a1.ToString(); }
+            set { int.TryParse(value, out a1); }
+        }
+        private int a2;
+        public string A2
+        {
+            get { return a2.ToString(); }
+            set { int.TryParse(value, out a2); }
+        }
+        private int a3;
+        public string A3
+        {
+            get { return a3.ToString(); }
+            set { int.TryParse(value, out a3); }
+        }
+        private int a4;
+        public string A4
+        {
+            get { return a4.ToString(); }
+            set { int.TryParse(value, out a4); }
+        }
+        private int pairs;
+        public string Pairs
+        {
+            get { return pairs.ToString(); }
+            set { int.TryParse(value, out pairs); }
+        }
+        private MyColor color;
+        public string Color
+        {
+            get { return color.ToString(); }
+            set { color = (MyColor)Enum.Parse(typeof(MyColor), value); }
+        }
+        private bool isseed;
+        public string IsSeed
+        {
+            get
+            {
+                if (isseed) return "True";
+                return "False";
+            }
+            set
+            {
+                if ("1" == value) isseed = true;
+                isseed = false;
+            }
+        }
+        private FlowerType type = FlowerType.Unknown;
+        public string Type
+        {
+            get { return type.ToString(); }
+            set
+            {
+                type = (FlowerType)Enum.Parse(typeof(FlowerType), value);
+            }
+        }
+        public string Note { get; set; }
+
+        public MyFlower() { }
+
+        public MyFlower(FlowerType flower, Gene aa1, Gene aa2, Gene aa3, Gene aa4 = Gene.Unknown)
+        {
+            type = flower;
+            a1 = (int)aa1;
+            a2 = (int)aa2;
+            a3 = (int)aa3;
+            a4 = (int)aa4;
         }
 
-        public override List<BaseModel> GetChildren()
+        public List<MyFlower> GetChildren()
         {
-            List<BaseModel> mList = new List<BaseModel>();
-            if (A4 != Gene.Unknown)
+            List<MyFlower> mList = new List<MyFlower>();
+            if ((Gene)a4 != Gene.Unknown)
             {
-                if ((int)A1 < 4 || (int)A2 < 4 || (int)A3 < 4 || (int)A4 < 4) return mList;
+                if (a1 < 4 || a2< 4 || a3 < 4 || a4 < 4) return mList;
 
                 string[] a_1 = A1.ToString().Split();
                 string[] a_2 = A2.ToString().Split();
@@ -41,7 +113,7 @@ namespace AnimalCrossingFlower.Model
                 {
                     string[] ms = s.Split();
                     MyFlower ll = new MyFlower(
-                        MyType,
+                        type,
                         (Gene)Enum.Parse(typeof(Gene), ms[0]),
                         (Gene)Enum.Parse(typeof(Gene), ms[1]),
                         (Gene)Enum.Parse(typeof(Gene), ms[2]),
@@ -52,7 +124,7 @@ namespace AnimalCrossingFlower.Model
             }
             else
             {
-                if ((int)A1 < 4 || (int)A2 < 4 || (int)A3 < 4) return mList;
+                if (a1 < 4 || a2 < 4 || a3 < 4) return mList;
 
                 string[] a_1 = A1.ToString().Split();
                 string[] a_2 = A2.ToString().Split();
@@ -69,7 +141,7 @@ namespace AnimalCrossingFlower.Model
                 {
                     string[] ms = s.Split();
                     MyFlower ll = new MyFlower(
-                        MyType,
+                        type,
                         (Gene)Enum.Parse(typeof(Gene), ms[0]),
                         (Gene)Enum.Parse(typeof(Gene), ms[1]),
                         (Gene)Enum.Parse(typeof(Gene), ms[2])
@@ -80,21 +152,21 @@ namespace AnimalCrossingFlower.Model
             return mList;
         }
 
-        public override MyColor GetColor()
+        public MyColor GetColor()
         {
-            var ml = ColorDic.GetColorDic(MyType);
+            var ml = FlowerHelper.GetFlowerPart(type);
             for (int i = 0; i < ml.Count; i++)
             {
-                if (A4 != Gene.Unknown)
+                if ((Gene)a4 != Gene.Unknown)
                 {
-                    if ((int)A1 == Convert.ToInt32(ml[i].A1) && (int)A2 == Convert.ToInt32(ml[i].A2) && (int)A3 == Convert.ToInt32(ml[i].A3) && (int)A4 == Convert.ToInt32(ml[i].A4))
+                    if (a1 == Convert.ToInt32(ml[i].A1) && a2 == Convert.ToInt32(ml[i].A2) && a3 == Convert.ToInt32(ml[i].A3) && a4 == Convert.ToInt32(ml[i].A4))
                     {
                         return (MyColor)Enum.Parse(typeof(MyColor), ml[i].Color);
                     }
                 }
                 else
                 {
-                    if ((int)A1 == Convert.ToInt32(ml[i].A1) && (int)A2 == Convert.ToInt32(ml[i].A2) && (int)A3 == Convert.ToInt32(ml[i].A3))
+                    if (a1 == Convert.ToInt32(ml[i].A1) && a2 == Convert.ToInt32(ml[i].A2) && a3 == Convert.ToInt32(ml[i].A3))
                     {
                         return (MyColor)Enum.Parse(typeof(MyColor), ml[i].Color);
                     }
@@ -103,22 +175,110 @@ namespace AnimalCrossingFlower.Model
             return MyColor.Unknown;
         }
 
-        public override int[] GetIntArray()
+        public bool GetIsSeed()
         {
-            if (A4 != Gene.Unknown) return new int[] { (int)A1, (int)A2, (int)A3, (int)A4 };
-            return new int[] { (int)A1, (int)A2, (int)A3 };
+            return isseed;
         }
 
-        public override Gene[] GetGeneArray()
+        public int[] GetIntArray()
         {
-            if (A4 != Gene.Unknown) return new Gene[] { A1, A2, A3, A4 };
-            return new Gene[] { A1, A2, A3 };
+            if (pairs > 3) return new int[] { a1, a2, a3, a4 };
+            return new int[] { a1, a2, a3 };
         }
 
-        public override int GetPairsNum()
+        public Gene[] GetGeneArray()
         {
-            if (A4 != Gene.Unknown) return 4;
-            return 3;
+            if (pairs > 3) return new Gene[] { (Gene)a1, (Gene)a2, (Gene)a3, (Gene)a4 };
+            return new Gene[] { (Gene)a1, (Gene)a2, (Gene)a3 };
+        }
+
+        public string[] GetGeneNameArray()
+        {
+            string gt = FlowerHelper.GeneType[type];
+            string[] re;
+            if (pairs > 3)
+            {
+                re = new string[] { ((Gene)a1).ToString(), ((Gene)a2).ToString(), ((Gene)a3).ToString(), ((Gene)a4).ToString() };
+            }
+            else
+            {
+                re = new string[] { ((Gene)a1).ToString(), ((Gene)a2).ToString(), ((Gene)a3).ToString() };
+            }
+            for (int i = 0; i < re.Length; i++)
+            {
+                re[i] = re[i].Replace('a', char.ToLower(gt[i]));
+                re[i] = re[i].Replace('A', char.ToUpper(gt[i]));
+            }
+            return re;
+        }
+
+        public string GetGeneName()
+        {
+            var a = GetGeneNameArray();
+            if (pairs > 3) return a[0] + a[1] + a[2] + a[3];
+            return a[0] + a[1] + a[2];
+        }
+
+        public enum Gene
+        {
+            Unknown = 0,
+            a = 2,
+            A = 3,
+            aa = 4,
+            Aa = 5,
+            AA = 6
+        }
+
+        public enum MyColor
+        {
+            Unknown,
+            White,
+            Yellow,
+            Red,
+            Pink,
+            Dark,
+            Orange,
+            Blue,
+            Purple,
+            Green,
+            YellowRed,
+            Gold
+        }
+
+        public enum FlowerType
+        {
+            Unknown,
+            Cosmos,
+            Hyacinths,
+            Lilies,
+            Mums,
+            Pansies,
+            Roses,
+            Tulips,
+            Windflower
+        }
+
+        /// <summary>
+        /// 获得子配型专用排列组合
+        /// </summary>
+        /// <param name="ls">存放配型的列表</param>
+        /// <param name="arr">二维数组</param>
+        /// <param name="rs">传递的字符</param>
+        /// <param name="_m">处于第几行的指示</param>
+        public void Permutation(ref List<string> ls, string[,] arr, string rs = "", int _m = 0)
+        {
+            string s = rs;
+            if (_m < arr.GetLength(0))
+            {
+                rs += arr[_m, 0];
+                Permutation(ref ls, arr, rs, _m + 1);
+                s += arr[_m, 1];
+                Permutation(ref ls, arr, s, _m + 1);
+            }
+            else
+            {
+                if (ls.Contains(rs)) ls.Add(rs);
+            }
         }
     }
 }
