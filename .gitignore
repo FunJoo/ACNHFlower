@@ -1,0 +1,8 @@
+#忽略bin
+/AnimalCrossingFlower/AnimalCrossingFlower/bin/
+
+#忽略obj
+/AnimalCrossingFlower/AnimalCrossingFlower/obj/
+
+#忽略nuget package
+/AnimalCrossingFlower/packages/
