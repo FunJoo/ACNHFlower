@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\MyFlower.cs" />
+    <Compile Include="Model\ParentCard.cs" />
     <Compile Include="Pages\PageParent.xaml.cs">
       <DependentUpon>PageParent.xaml</DependentUpon>
     </Compile>

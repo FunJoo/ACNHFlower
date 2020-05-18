@@ -66,10 +66,17 @@ namespace AnimalCrossingFlower.Helper
         {
             int[] ig = flower.GetIntArray();
 
-            if (ig == new int[] { 0, 0, 0, 0 }) return new List<MyFlower[]>();
-            if ((ig[0] > 0 && ig[0] < 4) || (ig[1] > 0 && ig[1] < 4) || (ig[2] > 0 && ig[2] < 4) || (ig[3] > 0 && ig[3] < 4)) return new List<MyFlower[]>();
-
-            if (flower.Type != "Roses") ig = new int[] { ig[0], ig[1], ig[2] };
+            if (ig.Length > 3)
+            {
+                if (ig == new int[] { 0, 0, 0, 0 }) return new List<MyFlower[]>();
+                if ((ig[0] > 0 && ig[0] < 4) || (ig[1] > 0 && ig[1] < 4) || (ig[2] > 0 && ig[2] < 4) || (ig[3] > 0 && ig[3] < 4)) return new List<MyFlower[]>();
+            }
+            else
+            {
+                if (ig == new int[] { 0, 0, 0 }) return new List<MyFlower[]>();
+                if ((ig[0] > 0 && ig[0] < 4) || (ig[1] > 0 && ig[1] < 4) || (ig[2] > 0 && ig[2] < 4)) return new List<MyFlower[]>();
+                ig = new int[] { ig[0], ig[1], ig[2] };
+            }
 
             List<List<int[]>> lli = new List<List<int[]>>();
             for (int i = 0; i < ig.Length; i++)
@@ -85,7 +92,7 @@ namespace AnimalCrossingFlower.Helper
                     case 5:
                         li.Add(new int[] { 5, 5 });
                         li.Add(new int[] { 4, 6 });
-                        li.Add(new int[] { 4, 4 });
+                        li.Add(new int[] { 5, 6 });
                         break;
                     case 6:
                         li.Add(new int[] { 5, 5 });
@@ -107,12 +114,63 @@ namespace AnimalCrossingFlower.Helper
             List<MyFlower[]> result = new List<MyFlower[]>();
             int[] left, right;
 
+            left = new int[lli.Count];
+            right = new int[lli.Count];
             for (int i = 0; i < lli[0].Count; i++)
             {
                 left = new int[lli.Count];
                 right = new int[lli.Count];
                 left[0] = lli[0][i][0];
+                right[0] = lli[0][i][1];
+                for(int j = 0; j < lli[1].Count; j++)
+                {
+                    left[1] = lli[1][j][0];
+                    right[1] = lli[1][j][1];
+                    for(int k = 0; k < lli[2].Count; k++)
+                    {
+                        left[2] = lli[2][k][0];
+                        right[2] = lli[2][k][1];
+                        if (lli.Count == 4)
+                        {
+                            for(int h = 0; h < lli[3].Count; h++)
+                            {
+                                left[3] = lli[3][h][0];
+                                right[3] = lli[3][h][1];
+                                MyFlower mfLeft = new MyFlower(
+                                flower.GetFlowerType(),
+                                (Gene)left[0],
+                                (Gene)left[1],
+                                (Gene)left[2],
+                                (Gene)left[3]);
+                                MyFlower mfRight = new MyFlower(
+                                    flower.GetFlowerType(),
+                                    (Gene)right[0],
+                                    (Gene)right[1],
+                                    (Gene)right[2],
+                                    (Gene)right[3]);
+                                MyFlower[] ff = new MyFlower[] { mfLeft, mfRight };
+                                if (!result.Contains(ff) || !result.Contains(ff.Reverse())) result.Add(ff);
+                            }
+                        }
+                        else
+                        {
+                            MyFlower mfLeft = new MyFlower(
+                                flower.GetFlowerType(),
+                                (Gene)left[0],
+                                (Gene)left[1],
+                                (Gene)left[2]);
+                            MyFlower mfRight = new MyFlower(
+                                flower.GetFlowerType(),
+                                (Gene)right[0],
+                                (Gene)right[1],
+                                (Gene)right[2]);
+                            MyFlower[] ff = new MyFlower[] { mfLeft, mfRight };
+                            if (!result.Contains(ff) || !result.Contains(ff.Reverse())) result.Add(ff);
+                        }
+                    }
+                }
             }
+            return result;
         }
 
         #region Flower Dictionary

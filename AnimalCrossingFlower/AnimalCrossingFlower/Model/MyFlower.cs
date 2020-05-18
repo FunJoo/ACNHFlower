@@ -64,7 +64,7 @@ namespace AnimalCrossingFlower.Model
             set
             {
                 if ("1" == value) isseed = true;
-                isseed = false;
+                else isseed = false;
             }
         }
         private FlowerType type = FlowerType.Unknown;
@@ -87,6 +87,7 @@ namespace AnimalCrossingFlower.Model
             a2 = (int)aa2;
             a3 = (int)aa3;
             a4 = (int)aa4;
+            pairs = flower == FlowerType.Roses ? 4 : 3;
         }
 
         public List<MyFlower> GetChildren()
@@ -180,6 +181,11 @@ namespace AnimalCrossingFlower.Model
             return isseed;
         }
 
+        public FlowerType GetFlowerType()
+        {
+            return type;
+        }
+
         public int[] GetIntArray()
         {
             if (pairs > 3) return new int[] { a1, a2, a3, a4 };
@@ -217,6 +223,16 @@ namespace AnimalCrossingFlower.Model
             var a = GetGeneNameArray();
             if (pairs > 3) return a[0] + a[1] + a[2] + a[3];
             return a[0] + a[1] + a[2];
+        }
+
+        public string GetImagePath()
+        {
+            return 
+                Color != "Unknown" 
+                ?
+                "/Assets/" + Type + Color + ".png" 
+                : 
+                "/Assets/" + Color + ".png";
         }
 
         public enum Gene
@@ -265,7 +281,7 @@ namespace AnimalCrossingFlower.Model
         /// <param name="arr">二维数组</param>
         /// <param name="rs">传递的字符</param>
         /// <param name="_m">处于第几行的指示</param>
-        public void Permutation(ref List<string> ls, string[,] arr, string rs = "", int _m = 0)
+        private void Permutation(ref List<string> ls, string[,] arr, string rs = "", int _m = 0)
         {
             string s = rs;
             if (_m < arr.GetLength(0))
