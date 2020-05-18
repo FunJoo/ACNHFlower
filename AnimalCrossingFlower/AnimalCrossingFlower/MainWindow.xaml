@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnimalCrossingFlower"
         mc:Ignorable="d"
-        Title="Flower" Height="600" Width="800"
+        Title="动物森友会Flower" Height="600" Width="800"
         Name="WindowMain"
         MinWidth="800"
         MinHeight="600"

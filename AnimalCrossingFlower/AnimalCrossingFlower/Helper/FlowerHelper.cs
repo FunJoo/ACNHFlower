@@ -173,6 +173,17 @@ namespace AnimalCrossingFlower.Helper
             return result;
         }
 
+        /// <summary>
+        /// 获取……孩子们
+        /// </summary>
+        /// <param name="f1">爸比</param>
+        /// <param name="f2">妈咪</param>
+        /// <returns>孩子们</returns>
+        public static List<MyFlower> GetOurChildren(MyFlower f1, MyFlower f2)
+        {
+            return null;
+        }
+
         #region Flower Dictionary
 
         /// <summary>
