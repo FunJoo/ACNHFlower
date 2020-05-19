@@ -31,7 +31,7 @@ namespace AnimalCrossingFlower
             InitializeComponent();
             BindGlobal();
 
-            FrameMain.Navigate(new PageParent());
+            FrameMain.Navigate(new PageZajiao());
         }
 
         private void BindGlobal()
@@ -193,8 +193,10 @@ namespace AnimalCrossingFlower
                     GlobalTool.CloseApp();
                     break;
                 case "MenuItemZajiao":
+                    FrameMain.Navigate(new PageZajiao());
                     break;
                 case "MenuItemParent":
+                    FrameMain.Navigate(new PageParent());
                     break;
             }
         }

@@ -102,12 +102,6 @@
                                       Click="MenuItem_Click">
                             </MenuItem>
                             <Separator />
-                            <MenuItem Header="更新数据（需联网）"
-                                      FontFamily="{StaticResource FontYahei}"
-                                      Name="MenuItemUpdate"
-                                      Click="MenuItem_Click">
-                            </MenuItem>
-                            <Separator />
                             <MenuItem Header="退出"
                                       Name="MenuItemExit"
                                       Click="MenuItem_Click"

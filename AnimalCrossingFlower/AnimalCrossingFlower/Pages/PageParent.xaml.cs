@@ -33,11 +33,11 @@ namespace AnimalCrossingFlower.Pages
         /// <summary>
         /// 设置了哪种花朵
         /// </summary>
-        private MyFlower.FlowerType SelectedFlower;
+        private FlowerType SelectedFlower;
         /// <summary>
         /// 设置了哪种花色
         /// </summary>
-        private MyFlower.MyColor SelectedColor;
+        private MyColor SelectedColor;
         /// <summary>
         /// 所设置花朵的所有ColorDic
         /// </summary>

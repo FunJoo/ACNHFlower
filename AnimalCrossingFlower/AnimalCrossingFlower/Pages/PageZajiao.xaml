@@ -1,0 +1,337 @@
+﻿<Page x:Class="AnimalCrossingFlower.Pages.PageZajiao"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AnimalCrossingFlower.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="800"
+      Title="PageZajiao"
+      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:wpftk="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+        
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal" 
+      TextOptions.TextRenderingMode="Auto"        
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{StaticResource FontYahei}"
+      >
+
+    <Grid x:Name="GridPageParent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:ColorZone x:Name="ColorZoneTop"
+                                  Grid.ColumnSpan="{Binding ElementName=GridPageParent,Path=ColumnDefinitions.Count}"
+                                  Mode="PrimaryMid"
+                                  Padding="10">
+            <Grid>
+                <materialDesign:ColorZone Mode="Standard"
+                                          CornerRadius="2"
+                                          Panel.ZIndex="1"
+                                          HorizontalAlignment="Left"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                          Width="200"
+                                          x:Name="ColorZoneChoose">
+                    <ComboBox materialDesign:HintAssist.Hint="分类"
+                              Margin="10 4"
+                              x:Name="ComboBoxChoose">
+                    </ComboBox>
+                </materialDesign:ColorZone>
+
+            </Grid>
+        </materialDesign:ColorZone>
+
+        <ListView x:Name="ListViewParent"
+                  Width="Auto"
+                  Height="Auto"
+                  Margin="5"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  Grid.Row="1"
+                  Grid.Column="1">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!--来自Nuget包VirtualizingWrapPanel-->
+                    <wpftk:VirtualizingWrapPanel Orientation="Vertical"/>
+
+                    <!--默认模板-->
+                    <!--<WrapPanel />-->
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                             Width="{Binding ElementName=GridChildrenCard,Path=ActualWidth}"
+                             Height="{Binding ElementName=GridChildrenCard,Path=ActualHeight}">
+                        <Grid x:Name="GridChildrenCard">
+                        </Grid>
+                    </materialDesign:Card>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1">
+            <materialDesign:Card  Width="402" Height="{Binding ElementName=BorderMid,Path=ActualHeight}"
+                                      Name="CardInfo">
+                <Grid x:Name="GridInfo">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Margin="5,0">
+                        <TextBlock x:Name="TextBlockTypeL"
+                                   Text="波斯菊"
+                                   FontSize="20"
+                                   Margin="0,10,0,0"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TextBlockColorL"
+                                   Text="红色"
+                                   Foreground="Red"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TextBlockGeneL"
+                                   FontSize="12"
+                                   Text=" "
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                Margin="5,0"
+                                Grid.Column="2">
+                        <TextBlock x:Name="TextBlockTypeR"
+                                   Text="波斯菊"
+                                   FontSize="20"
+                                   Margin="0,10,0,0"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TextBlockColorR"
+                                   Text="黄色"
+                                   Foreground="YellowGreen"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TextBlockGeneR"
+                                   FontSize="12"
+                                   Text=" "
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Image x:Name="ImageFlowerL"
+                           Source="/Assets/CosmosRed.png"
+                           Grid.Row="1"
+                           Margin="20"/>
+
+                    <Image x:Name="ImageFlowerR"
+                           Source="/Assets/CosmosYellow.png"
+                           Grid.Row="1"
+                           Margin="20"
+                           Grid.Column="2"/>
+
+                    <StackPanel x:Name="StackPanelContentL"
+                                Grid.Row="2"
+                                Margin="5,0">
+                        <CheckBox x:Name="CheckBoxColorL"
+                                  Foreground="Gray"
+                                  HorizontalAlignment="Center"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  Content="按颜色"
+                                  Checked="CheckBox_Checked"/>
+                        <ComboBox x:Name="ComboBoxColorL"
+                                  materialDesign:HintAssist.Hint="选择颜色"
+                                  IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxColorL}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,5,0,0"
+                                    HorizontalAlignment="Center">
+                            <CheckBox x:Name="CheckBoxGeneL"
+                                  Foreground="Gray"
+                                  HorizontalAlignment="Center"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  Content="按基因型"
+                                  Checked="CheckBox_Checked"/>
+                            <TextBlock Text="可部分留空"
+                                   FontSize="10"
+                                   Foreground="Gray"
+                                       Margin="10,0,0,0"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
+                        
+                        <Grid x:Name="GridGeneL">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <ComboBox x:Name="ComboBoxA1L"
+                                      Margin="5,0"
+                                  materialDesign:HintAssist.Hint="选择A1"
+                                      IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxGeneL}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                            <ComboBox x:Name="ComboBoxA2L"
+                                      Margin="5,0"
+                                      Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="选择A2"
+                                      IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxGeneL}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                            <ComboBox x:Name="ComboBoxA3L"
+                                      Margin="5,0"
+                                      Grid.Row="1"
+                                  materialDesign:HintAssist.Hint="选择A3"
+                                      IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxGeneL}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                            <ComboBox x:Name="ComboBoxA4L"
+                                      Margin="5,0"
+                                      Grid.Row="1"
+                                      Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="选择A4"
+                                      IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxGeneL}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                        </Grid>
+
+                        <CheckBox x:Name="CheckBoxSeedL"
+                                  Foreground="Gray"
+                                  Margin="0,5,0,0"
+                                  HorizontalAlignment="Center"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  Content="按种子"
+                                  Checked="CheckBox_Checked"/>
+                        <ComboBox x:Name="ComboBoxSeedL"
+                                  materialDesign:HintAssist.Hint="选择颜色"
+                                  IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxSeedL}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="StackPanelContentR"
+                                Grid.Row="2"
+                                Margin="5,0"
+                                Grid.Column="2">
+                        <CheckBox x:Name="CheckBoxColorR"
+                                  Foreground="Gray"
+                                  HorizontalAlignment="Center"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  Content="按颜色"
+                                  Checked="CheckBox_Checked"/>
+                        <ComboBox x:Name="ComboBoxColorR"
+                                  materialDesign:HintAssist.Hint="选择颜色"
+                                  IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxColorR}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,5,0,0"
+                                    HorizontalAlignment="Center">
+                        <CheckBox x:Name="CheckBoxGeneR"
+                                  Foreground="Gray"
+                                  HorizontalAlignment="Center"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  Content="按基因型"
+                                  Checked="CheckBox_Checked"/>
+                        <TextBlock Text="可部分留空"
+                                   FontSize="10"
+                                   Margin="10,0,0,0"
+                                   Foreground="Gray"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
+                        <Grid x:Name="GridGeneR">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <ComboBox x:Name="ComboBoxA1R"
+                                      Margin="5,0"
+                                  materialDesign:HintAssist.Hint="选择A1"
+                                      IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxGeneR}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                            <ComboBox x:Name="ComboBoxA2R"
+                                      Margin="5,0"
+                                      Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="选择A2"
+                                      IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxGeneR}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                            <ComboBox x:Name="ComboBoxA3R"
+                                      Margin="5,0"
+                                      Grid.Row="1"
+                                  materialDesign:HintAssist.Hint="选择A3"
+                                      IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxGeneR}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                            <ComboBox x:Name="ComboBoxA4R"
+                                      Margin="5,0"
+                                      Grid.Row="1"
+                                      Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="选择A4"
+                                      IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxGeneR}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                        </Grid>
+                        <CheckBox x:Name="CheckBoxSeedR"
+                                  Foreground="Gray"
+                                  Margin="0,5,0,0"
+                                  HorizontalAlignment="Center"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  Content="按种子"
+                                  Checked="CheckBox_Checked"/>
+                        <ComboBox x:Name="ComboBoxSeedR"
+                                  materialDesign:HintAssist.Hint="选择颜色"
+                                  IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxSeedR}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                    </StackPanel>
+
+                    <Border x:Name="BorderInfo"
+                            Background="{DynamicResource MaterialDesignDivider}"
+                            Width="2"
+                            Grid.RowSpan="{Binding ElementName=GridInfo,Path=RowDefinitions.Count}"
+                            Grid.Column="1"
+                            VerticalAlignment="Stretch"
+                            SnapsToDevicePixels="True" />
+
+                    <Button x:Name="ButtonSearch"
+                                Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                Width="100"
+                                Content="查  询"
+                                Margin="0,10"
+                                Click="Button_Click"
+                            Grid.ColumnSpan="{Binding ElementName=GridInfo,Path=ColumnDefinitions.Count}"
+                            Grid.RowSpan="{Binding ElementName=GridInfo,Path=RowDefinitions.Count}"
+                            VerticalAlignment="Bottom"/>
+
+                </Grid>
+            </materialDesign:Card>
+
+            <Border x:Name="BorderMid"
+                Background="{DynamicResource MaterialDesignDivider}"
+                Width="2"
+                VerticalAlignment="Stretch"
+                SnapsToDevicePixels="True" />
+
+        </StackPanel>
+
+    </Grid>
+</Page>

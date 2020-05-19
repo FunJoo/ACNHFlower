@@ -181,7 +181,130 @@ namespace AnimalCrossingFlower.Helper
         /// <returns>孩子们</returns>
         public static List<MyFlower> GetOurChildren(MyFlower f1, MyFlower f2)
         {
-            return null;
+            List<MyFlower> result = new List<MyFlower>();
+            if (f1.Type != f2.Type) return result;
+
+            var AllFlowers = GetFlowerPart(f1.GetFlowerType());
+
+            List<MyFlower> f1children = f1.GetChildren();
+            List<MyFlower> f2children = f2.GetChildren();
+
+            foreach(var f1child in f1children)
+            {
+                int[] aa = f1child.GetIntArray();
+                foreach(var f2child in f2children)
+                {
+                    int[] bb = f2child.GetIntArray();
+                    int[] cc = new int[aa.Length];
+                    for(int i = 0; i < aa.Length; i++)
+                    {
+                        cc[i] = aa[i] + bb[i];
+                    }
+                    foreach (var f in AllFlowers)
+                    {
+                        if (f.GetIntArray() == cc)
+                        {
+                            bool inresult = false;
+                            foreach (var r in result)
+                            {
+                                if (r.GetGeneName() == f.GetGeneName()) inresult = true;
+                            }
+                            if (!inresult) result.Add(f);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 获取概率
+        /// </summary>
+        /// <param name="p1">父本1</param>
+        /// <param name="p2">父本2</param>
+        /// <param name="c">儿子</param>
+        /// <returns>概率</returns>
+        public float GetProbability(MyFlower f1,MyFlower f2,MyFlower c)
+        {
+            if (f1.Type != f2.Type || f1.Type != c.Type) return 0;
+            int[] f1ca = f1.GetIntArray();
+            int[] f2ca = f2.GetIntArray();
+
+            float zongshu = 1;
+            List<int[]> f1c = new List<int[]>();
+            List<int[]> f2c = new List<int[]>();
+            int[] linshi = new int[f1ca.Length];
+            Permutation(ref f1c, ref zongshu, linshi, f1ca, 0);
+            Permutation(ref f2c, ref zongshu, linshi, f2ca, 0);
+
+            int count = 0;
+            for(int i = 0; i < f1c.Count; i++)
+            {
+                for(int j = 0; j < f2c.Count; j++)
+                {
+                    int[] ca = c.GetIntArray();
+                    if (c.GetFlowerType() == FlowerType.Roses)
+                    {
+                        if(
+                            ca[0]==f1c[i][0]+f2c[j][0] &&
+                            ca[1] == f1c[i][1] + f2c[j][1] &&
+                            ca[2] == f1c[i][2] + f2c[j][2] &&
+                            ca[3] == f1c[i][3] + f2c[j][3]
+                            )
+                        {
+                            count++;
+                        }
+                    }
+                    else
+                    {
+                        if (ca[0] == f1c[i][0] + f2c[j][0] &&
+                            ca[1] == f1c[i][1] + f2c[j][1] &&
+                            ca[2] == f1c[i][2] + f2c[j][2]
+                            )
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+            return count / zongshu;
+        }
+
+        /// <summary>
+        /// 获取所有子型，包含重复的
+        /// </summary>
+        /// <param name="children">存放儿子的列表</param>
+        /// <param name="linshi">临时结果</param>
+        /// <param name="zongshu">概率总数</param>
+        /// <param name="parent">父本</param>
+        /// <param name="i">指示数</param>
+        private void Permutation(ref List<int[]> children, ref float zongshu, int[] linshi, int[] parent, int i)
+        {
+            if (i < parent.Length)
+            {
+                switch (parent[i])
+                {
+                    case 4:
+                        linshi[i] = 2;
+                        Permutation(ref children, ref zongshu, linshi, parent, i + 1);
+                        break;
+                    case 5:
+                        zongshu *= 2;
+                        linshi[i] = 2;
+                        Permutation(ref children, ref zongshu, linshi, parent, i + 1);
+                        linshi[i] = 3;
+                        Permutation(ref children, ref zongshu, linshi, parent, i + 1);
+                        break;
+                    case 6:
+                        linshi[i] = 3;
+                        Permutation(ref children, ref zongshu, linshi, parent, i + 1);
+                        break;
+                }
+            }
+            else
+            {
+                children.Add(linshi);
+            }
         }
 
         #region Flower Dictionary
