@@ -114,8 +114,6 @@ namespace AnimalCrossingFlower.Helper
             List<MyFlower[]> result = new List<MyFlower[]>();
             int[] left, right;
 
-            left = new int[lli.Count];
-            right = new int[lli.Count];
             for (int i = 0; i < lli[0].Count; i++)
             {
                 left = new int[lli.Count];

@@ -223,19 +223,12 @@ namespace AnimalCrossingFlower.Pages
                                 foreach(var a in parent)
                                 {
                                     var aa = new ParentCard(a);
-                                    if (reCard.Count == 0)
+                                    bool inResult = false;
+                                    foreach (var b in reCard)
                                     {
-                                        reCard.Add(aa);
+                                        if (b.TextGeneLeft == aa.TextGeneLeft && b.TextGeneRight == aa.TextGeneRight) inResult = true;
                                     }
-                                    else
-                                    {
-                                        bool inResult = false;
-                                        foreach (var b in reCard)
-                                        {
-                                            if (b.TextGeneLeft == aa.TextGeneLeft && b.TextGeneRight == aa.TextGeneRight) inResult = true;
-                                        }
-                                        if (!inResult) reCard.Add(aa);
-                                    }
+                                    if (!inResult) reCard.Add(aa);
                                 }
                             }
                             ListViewParent.ItemsSource = reCard;

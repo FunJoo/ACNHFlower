@@ -2,6 +2,7 @@
 using AnimalCrossingFlower.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -332,17 +333,15 @@ namespace AnimalCrossingFlower.Pages
             string senderName = (sender as Button).Name;
             switch (senderName)
             {
-                /*
                 case "ButtonSearch":
                     {
-                        if (CheckBoxColor.IsChecked == true)
+                        if (CheckBoxColorL.IsChecked == true)
                         {//按颜色查父本
-                            if (ComboBoxColor.SelectedIndex == 0)
+                            if (ComboBoxColorL.SelectedIndex == 0)
                             {
                                 GlobalTool.OpenDialogButton("没有选择颜色");
                                 return;
                             }
-                            if (SelectedColorDic == null || SelectedColorDic.Count == 0) return;
                             ObservableCollection<ParentCard> reCard = new ObservableCollection<ParentCard>();
                             foreach (var everyflower in SelectedColorDic)
                             {
@@ -350,19 +349,12 @@ namespace AnimalCrossingFlower.Pages
                                 foreach (var a in parent)
                                 {
                                     var aa = new ParentCard(a);
-                                    if (reCard.Count == 0)
+                                    bool inResult = false;
+                                    foreach (var b in reCard)
                                     {
-                                        reCard.Add(aa);
+                                        if (b.TextGeneLeft == aa.TextGeneLeft && b.TextGeneRight == aa.TextGeneRight) inResult = true;
                                     }
-                                    else
-                                    {
-                                        bool inResult = false;
-                                        foreach (var b in reCard)
-                                        {
-                                            if (b.TextGeneLeft == aa.TextGeneLeft && b.TextGeneRight == aa.TextGeneRight) inResult = true;
-                                        }
-                                        if (!inResult) reCard.Add(aa);
-                                    }
+                                    if (!inResult) reCard.Add(aa);
                                 }
                             }
                             ListViewParent.ItemsSource = reCard;
@@ -386,7 +378,6 @@ namespace AnimalCrossingFlower.Pages
                         }
                     }
                     break;
-                    */
             }
         }
 
