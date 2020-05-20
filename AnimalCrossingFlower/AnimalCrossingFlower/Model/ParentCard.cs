@@ -34,6 +34,21 @@ namespace AnimalCrossingFlower.Model
 
         public string TextGeneRight => FlowerRight.GetGeneName() + (FlowerRight.GetIsSeed() ? " 种子" : "");
 
-        public string TextChildren => "aa";
+        /// <summary>
+        /// 显示所有孩子的基因型，因为放在界面上有点鸡肋，PageParent里还是去掉了，功能暂时保留
+        /// </summary>
+        public string TextChildren
+        {
+            get
+            {
+                string s = "";
+                var list = FlowerHelper.GetOurChildren(FlowerLeft, FlowerRight);
+                foreach(var a in list)
+                {
+                    s += a.GetGeneName() + " ";
+                }
+                return s;
+            }
+        }
     }
 }

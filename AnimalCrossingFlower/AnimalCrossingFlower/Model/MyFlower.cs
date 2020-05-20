@@ -97,28 +97,24 @@ namespace AnimalCrossingFlower.Model
             {
                 if (a1 < 4 || a2< 4 || a3 < 4 || a4 < 4) return mList;
 
-                string[] a_1 = A1.ToString().Split();
-                string[] a_2 = A2.ToString().Split();
-                string[] a_3 = A3.ToString().Split();
-                string[] a_4 = A4.ToString().Split();
-                string[,] child = new string[4, 2] {
-                { a_1[0],a_1[1]},
-                { a_2[0],a_2[1]},
-                { a_3[0],a_3[1]},
-                { a_4[0],a_4[1]}
-            };
+                var aa = GetGeneAAName();
+                string[,] child = new string[,] {
+                { aa[0].ToString(),aa[1].ToString()},
+                { aa[2].ToString(),aa[3].ToString()},
+                { aa[4].ToString(),aa[5].ToString()},
+                { aa[6].ToString(),aa[7].ToString()},
+                };
 
                 List<string> ls = new List<string>();
                 Permutation(ref ls, child, "");
                 foreach (var s in ls)
                 {
-                    string[] ms = s.Split();
                     MyFlower ll = new MyFlower(
                         type,
-                        (Gene)Enum.Parse(typeof(Gene), ms[0]),
-                        (Gene)Enum.Parse(typeof(Gene), ms[1]),
-                        (Gene)Enum.Parse(typeof(Gene), ms[2]),
-                        (Gene)Enum.Parse(typeof(Gene), ms[3])
+                        (Gene)Enum.Parse(typeof(Gene), s[0].ToString()),
+                        (Gene)Enum.Parse(typeof(Gene), s[1].ToString()),
+                        (Gene)Enum.Parse(typeof(Gene), s[2].ToString()),
+                        (Gene)Enum.Parse(typeof(Gene), s[3].ToString())
                         );
                     mList.Add(ll);
                 }
@@ -127,25 +123,22 @@ namespace AnimalCrossingFlower.Model
             {
                 if (a1 < 4 || a2 < 4 || a3 < 4) return mList;
 
-                string[] a_1 = A1.ToString().Split();
-                string[] a_2 = A2.ToString().Split();
-                string[] a_3 = A3.ToString().Split();
-                string[,] child = new string[3, 2] {
-                { a_1[0],a_1[1]},
-                { a_2[0],a_2[1]},
-                { a_3[0],a_3[1]}
+                var aa = GetGeneAAName();
+                string[,] child = new string[,] {
+                { aa[0].ToString(),aa[1].ToString()},
+                { aa[2].ToString(),aa[3].ToString()},
+                { aa[4].ToString(),aa[5].ToString()}
                 };
 
                 List<string> ls = new List<string>();
                 Permutation(ref ls, child, "");
                 foreach (var s in ls)
                 {
-                    string[] ms = s.Split();
                     MyFlower ll = new MyFlower(
                         type,
-                        (Gene)Enum.Parse(typeof(Gene), ms[0]),
-                        (Gene)Enum.Parse(typeof(Gene), ms[1]),
-                        (Gene)Enum.Parse(typeof(Gene), ms[2])
+                        (Gene)Enum.Parse(typeof(Gene), s[0].ToString()),
+                        (Gene)Enum.Parse(typeof(Gene), s[1].ToString()),
+                        (Gene)Enum.Parse(typeof(Gene), s[2].ToString())
                         );
                     mList.Add(ll);
                 }
@@ -225,6 +218,27 @@ namespace AnimalCrossingFlower.Model
             return a[0] + a[1] + a[2];
         }
 
+        public string[] GetGeneAANameArray()
+        {
+            string[] re;
+            if (pairs > 3)
+            {
+                re = new string[] { ((Gene)a1).ToString(), ((Gene)a2).ToString(), ((Gene)a3).ToString(), ((Gene)a4).ToString() };
+            }
+            else
+            {
+                re = new string[] { ((Gene)a1).ToString(), ((Gene)a2).ToString(), ((Gene)a3).ToString() };
+            }
+            return re;
+        }
+
+        public string GetGeneAAName()
+        {
+            var a = GetGeneAANameArray();
+            if (pairs > 3) return a[0] + a[1] + a[2] + a[3];
+            return a[0] + a[1] + a[2];
+        }
+
         public string GetImagePath()
         {
             return 
@@ -293,7 +307,7 @@ namespace AnimalCrossingFlower.Model
             }
             else
             {
-                if (ls.Contains(rs)) ls.Add(rs);
+                if (!ls.Contains(rs)) ls.Add(rs);
             }
         }
     }

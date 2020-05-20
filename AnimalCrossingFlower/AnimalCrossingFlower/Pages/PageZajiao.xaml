@@ -51,7 +51,7 @@
             </Grid>
         </materialDesign:ColorZone>
 
-        <ListView x:Name="ListViewParent"
+        <ListView x:Name="ListViewChildren"
                   Width="Auto"
                   Height="Auto"
                   Margin="5"
@@ -201,11 +201,6 @@
                                   Style="{StaticResource MaterialDesignCheckBox}"
                                   Content="按基因型"
                                   Checked="CheckBox_Checked"/>
-                            <TextBlock Text="可部分留空"
-                                   FontSize="10"
-                                   Foreground="Gray"
-                                       Margin="10,0,0,0"
-                                   VerticalAlignment="Bottom"/>
                         </StackPanel>
                         
                         <Grid x:Name="GridGeneL">
@@ -273,17 +268,12 @@
                         <StackPanel Orientation="Horizontal"
                                     Margin="0,5,0,0"
                                     HorizontalAlignment="Center">
-                        <CheckBox x:Name="CheckBoxGeneR"
+                            <CheckBox x:Name="CheckBoxGeneR"
                                   Foreground="Gray"
                                   HorizontalAlignment="Center"
                                   Style="{StaticResource MaterialDesignCheckBox}"
                                   Content="按基因型"
                                   Checked="CheckBox_Checked"/>
-                        <TextBlock Text="可部分留空"
-                                   FontSize="10"
-                                   Margin="10,0,0,0"
-                                   Foreground="Gray"
-                                   VerticalAlignment="Bottom"/>
                         </StackPanel>
                         <Grid x:Name="GridGeneR">
                             <Grid.ColumnDefinitions>

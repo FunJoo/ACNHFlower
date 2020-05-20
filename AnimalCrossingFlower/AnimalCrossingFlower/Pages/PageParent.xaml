@@ -129,17 +129,6 @@
                        Grid.Row="1"
                        Grid.ColumnSpan="2"
                         Orientation="Vertical">
-                                <Border x:Name="BorderCard"
-                            Background="{DynamicResource MaterialDesignDivider}"
-                            Height="2"
-                            HorizontalAlignment="Stretch"
-                            SnapsToDevicePixels="True" />
-                                <TextBlock Text="后代基因型："
-                           FontSize="12"/>
-                                <TextBlock x:Name="TextBlockChild"
-                       FontSize="10"
-                       Text="{Binding TextChildren}"
-                       TextWrapping="Wrap"/>
                             </StackPanel>
                         </Grid>
                     </materialDesign:Card>

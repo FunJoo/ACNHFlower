@@ -1,4 +1,5 @@
 ﻿using AnimalCrossingFlower.Model;
+using AnimalCrossingFlower.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,11 +16,6 @@ namespace AnimalCrossingFlower.Helper
     class FlowerHelper
     {
         /// <summary>
-        /// 内部存放Json的string，以免多次读取文件
-        /// </summary>
-        private static string TempJson = "";
-
-        /// <summary>
         /// 获取Json内的所有花朵
         /// </summary>
         /// <returns>花朵列表</returns>
@@ -27,11 +23,10 @@ namespace AnimalCrossingFlower.Helper
         {
             try
             {
-                if (TempJson == "") TempJson = File.ReadAllText("flower.json");
 
                 //这个类需要添加引用：System.Web.Extensions
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                var myresult = serializer.Deserialize<List<MyFlower>>(TempJson);
+                var myresult = serializer.Deserialize<List<MyFlower>>(Resources.Flower_v1);
                 return myresult;
             }
             catch
@@ -200,7 +195,13 @@ namespace AnimalCrossingFlower.Helper
                     }
                     foreach (var f in AllFlowers)
                     {
-                        if (f.GetIntArray() == cc)
+                        int eq = 0;
+                        var fi = f.GetIntArray();
+                        for(int i = 0; i < fi.Length; i++)
+                        {
+                            if (cc[i] == fi[i]) eq++;
+                        }
+                        if (eq==fi.Length)
                         {
                             bool inresult = false;
                             foreach (var r in result)
@@ -222,7 +223,7 @@ namespace AnimalCrossingFlower.Helper
         /// <param name="p2">父本2</param>
         /// <param name="c">儿子</param>
         /// <returns>概率</returns>
-        public float GetProbability(MyFlower f1,MyFlower f2,MyFlower c)
+        public static float GetProbability(MyFlower f1,MyFlower f2,MyFlower c)
         {
             if (f1.Type != f2.Type || f1.Type != c.Type) return 0;
             int[] f1ca = f1.GetIntArray();
@@ -238,7 +239,7 @@ namespace AnimalCrossingFlower.Helper
             int count = 0;
             for(int i = 0; i < f1c.Count; i++)
             {
-                for(int j = 0; j < f2c.Count; j++)
+                for (int j = 0; j < f2c.Count; j++)
                 {
                     int[] ca = c.GetIntArray();
                     if (c.GetFlowerType() == FlowerType.Roses)
@@ -265,18 +266,19 @@ namespace AnimalCrossingFlower.Helper
                     }
                 }
             }
-            return count / zongshu;
+            float r = count / zongshu;
+            return r;
         }
 
         /// <summary>
         /// 获取所有子型，包含重复的
         /// </summary>
         /// <param name="children">存放儿子的列表</param>
-        /// <param name="linshi">临时结果</param>
+        /// <param name="ls">临时结果</param>
         /// <param name="zongshu">概率总数</param>
         /// <param name="parent">父本</param>
         /// <param name="i">指示数</param>
-        private void Permutation(ref List<int[]> children, ref float zongshu, int[] linshi, int[] parent, int i)
+        private static void Permutation(ref List<int[]> children, ref float zongshu, int[] linshi, int[] parent, int i)
         {
             if (i < parent.Length)
             {
@@ -301,7 +303,15 @@ namespace AnimalCrossingFlower.Helper
             }
             else
             {
-                children.Add(linshi);
+                if (linshi.Length == 4)
+                {
+                    children.Add(new int[] { linshi[0], linshi[1], linshi[2], linshi[3] });
+                }
+                else
+                {
+                    children.Add(new int[] { linshi[0], linshi[1], linshi[2] });
+                }
+                
             }
         }
 

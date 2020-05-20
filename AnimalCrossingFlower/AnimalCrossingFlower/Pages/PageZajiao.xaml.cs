@@ -36,15 +36,22 @@ namespace AnimalCrossingFlower.Pages
         /// </summary>
         private FlowerType SelectedFlower;
         /// <summary>
-        /// 设置了哪种花色
+        /// 设置了哪种花色左
         /// </summary>
-        private MyColor SelectedColor;
+        private MyColor SelectedColorL;
         /// <summary>
-        /// 所设置花朵的所有ColorDic
+        /// 设置了哪种花色右
+        /// </summary>
+        private MyColor SelectedColorR;
+        /// <summary>
+        /// 所设置花朵种类的所有花
         /// </summary>
         private List<MyFlower> ListColorDic;
 
-        private List<MyFlower> SelectedColorDic;
+        //选择了对应花色的所有基因型
+        private List<MyFlower> SelectedColorDicL;
+        private List<MyFlower> SelectedColorDicR;
+
         private List<string> ListColor;
         private List<string> ListColorName;
 
@@ -178,19 +185,19 @@ namespace AnimalCrossingFlower.Pages
                     {
                         if (cb.SelectedIndex == 0) return;
 
-                        SelectedColor = (MyColor)Enum.Parse(typeof(MyColor), ListColor[cb.SelectedIndex]);
+                        SelectedColorL = (MyColor)Enum.Parse(typeof(MyColor), ListColor[cb.SelectedIndex]);
 
-                        TextBlockColorL.Text = FlowerHelper.ColorNameShow[SelectedColor];
-                        TextBlockColorL.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[SelectedColor]);
-                        ImageFlowerL.Source = new BitmapImage(new Uri("/Assets/" + SelectedFlower.ToString() + SelectedColor.ToString() + ".png", UriKind.Relative));
+                        TextBlockColorL.Text = FlowerHelper.ColorNameShow[SelectedColorL];
+                        TextBlockColorL.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[SelectedColorL]);
+                        ImageFlowerL.Source = new BitmapImage(new Uri("/Assets/" + SelectedFlower.ToString() + SelectedColorL.ToString() + ".png", UriKind.Relative));
 
                         string s = "";
-                        SelectedColorDic = new List<MyFlower>();
+                        SelectedColorDicL = new List<MyFlower>();
                         foreach (var a in ListColorDic)
                         {
                             if (a.Color == ListColor[cb.SelectedIndex])
                             {
-                                SelectedColorDic.Add(a);
+                                SelectedColorDicL.Add(a);
                                 string n = a.GetGeneName();
                                 if (!s.Contains(n)) s += n + " ";
                             }
@@ -202,19 +209,19 @@ namespace AnimalCrossingFlower.Pages
                     {
                         if (cb.SelectedIndex == 0) return;
 
-                        SelectedColor = (MyColor)Enum.Parse(typeof(MyColor), ListColor[cb.SelectedIndex]);
+                        SelectedColorR = (MyColor)Enum.Parse(typeof(MyColor), ListColor[cb.SelectedIndex]);
 
-                        TextBlockColorR.Text = FlowerHelper.ColorNameShow[SelectedColor];
-                        TextBlockColorR.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[SelectedColor]);
-                        ImageFlowerR.Source = new BitmapImage(new Uri("/Assets/" + SelectedFlower.ToString() + SelectedColor.ToString() + ".png", UriKind.Relative));
+                        TextBlockColorR.Text = FlowerHelper.ColorNameShow[SelectedColorR];
+                        TextBlockColorR.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[SelectedColorR]);
+                        ImageFlowerR.Source = new BitmapImage(new Uri("/Assets/" + SelectedFlower.ToString() + SelectedColorR.ToString() + ".png", UriKind.Relative));
 
                         string s = "";
-                        SelectedColorDic = new List<MyFlower>();
+                        SelectedColorDicR = new List<MyFlower>();
                         foreach (var a in ListColorDic)
                         {
                             if (a.Color == ListColor[cb.SelectedIndex])
                             {
-                                SelectedColorDic.Add(a);
+                                SelectedColorDicR.Add(a);
                                 string n = a.GetGeneName();
                                 if (!s.Contains(n)) s += n + " ";
                             }
@@ -266,8 +273,8 @@ namespace AnimalCrossingFlower.Pages
 
                             }
                             TextBlockGeneL.Text = cd.GetGeneName();
-                            TextBlockColorL.Text = FlowerHelper.ColorNameShow[(MyColor)Enum.Parse(typeof(MyColor), cd.Color)];
-                            TextBlockColorL.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[(MyColor)Enum.Parse(typeof(MyColor), cd.Color)]);
+                            TextBlockColorL.Text = FlowerHelper.ColorNameShow[cd.GetColor()];
+                            TextBlockColorL.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[cd.GetColor()]);
 
                             string path = cd.GetImagePath();
                             ImageFlowerL.Source = new BitmapImage(new Uri(path, UriKind.Relative));
@@ -317,12 +324,34 @@ namespace AnimalCrossingFlower.Pages
                                 }
                             }
                             TextBlockGeneR.Text = cd.GetGeneName();
-                            TextBlockColorR.Text = FlowerHelper.ColorNameShow[(MyColor)Enum.Parse(typeof(MyColor), cd.Color)];
-                            TextBlockColorR.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[(MyColor)Enum.Parse(typeof(MyColor), cd.Color)]);
+                            TextBlockColorR.Text = FlowerHelper.ColorNameShow[cd.GetColor()];
+                            TextBlockColorR.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[cd.GetColor()]);
 
                             string path = cd.GetImagePath();
                             ImageFlowerR.Source = new BitmapImage(new Uri(path, UriKind.Relative));
                         }
+                    }
+                    break;
+                case "ComboBoxSeedL":
+                    {
+                        if (cb.SelectedIndex == 0) return;
+                        int index = cb.SelectedIndex - 1;
+                        TextBlockGeneL.Text = ListSeed[index].GetGeneName();
+                        TextBlockColorL.Text = FlowerHelper.ColorNameShow[ListSeed[index].GetColor()];
+                        TextBlockColorL.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[ListSeed[index].GetColor()]);
+                        string path = ListSeed[index].GetImagePath();
+                        ImageFlowerL.Source = new BitmapImage(new Uri(path, UriKind.Relative));
+                    }
+                    break;
+                case "ComboBoxSeedR":
+                    {
+                        if (cb.SelectedIndex == 0) return;
+                        int index = cb.SelectedIndex - 1;
+                        TextBlockGeneR.Text = ListSeed[index].GetGeneName();
+                        TextBlockColorR.Text = FlowerHelper.ColorNameShow[ListSeed[index].GetColor()];
+                        TextBlockColorR.Foreground = new SolidColorBrush(FlowerHelper.ColorShow[ListSeed[index].GetColor()]);
+                        string path = ListSeed[index].GetImagePath();
+                        ImageFlowerR.Source = new BitmapImage(new Uri(path, UriKind.Relative));
                     }
                     break;
             }
@@ -335,47 +364,120 @@ namespace AnimalCrossingFlower.Pages
             {
                 case "ButtonSearch":
                     {
+                        List<MyFlower> ParentL = new List<MyFlower>();
+                        List<MyFlower> ParentR = new List<MyFlower>();
+
                         if (CheckBoxColorL.IsChecked == true)
-                        {//按颜色查父本
+                        {//按颜色L
                             if (ComboBoxColorL.SelectedIndex == 0)
                             {
                                 GlobalTool.OpenDialogButton("没有选择颜色");
                                 return;
                             }
-                            ObservableCollection<ParentCard> reCard = new ObservableCollection<ParentCard>();
-                            foreach (var everyflower in SelectedColorDic)
+                            foreach (var everyflower in SelectedColorDicL) ParentL.Add(everyflower);
+                        }
+                        if (CheckBoxColorR.IsChecked == true)
+                        {//按颜色R
+                            if (ComboBoxColorR.SelectedIndex == 0)
                             {
-                                var parent = FlowerHelper.GetMyParent(everyflower);
-                                foreach (var a in parent)
+                                GlobalTool.OpenDialogButton("没有选择颜色");
+                                return;
+                            }
+                            foreach (var everyflower in SelectedColorDicR) ParentR.Add(everyflower);
+                        }
+                        if (CheckBoxGeneL.IsChecked == true)
+                        {//按基因型L
+                            Gene a1 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA1L.SelectedItem.ToString());
+                            Gene a2 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA2L.SelectedItem.ToString());
+                            Gene a3 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA3L.SelectedItem.ToString());
+                            Gene a4 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA4L.SelectedItem.ToString());
+                            MyFlower f = new MyFlower(SelectedFlower, a1, a2, a3, a4);
+                            foreach (var i in f.GetIntArray())
+                            {
+                                if(i==0)
                                 {
-                                    var aa = new ParentCard(a);
-                                    bool inResult = false;
-                                    foreach (var b in reCard)
-                                    {
-                                        if (b.TextGeneLeft == aa.TextGeneLeft && b.TextGeneRight == aa.TextGeneRight) inResult = true;
-                                    }
-                                    if (!inResult) reCard.Add(aa);
+                                    GlobalTool.OpenDialogButton("没有选择基因型");
+                                    return;
                                 }
                             }
-                            ListViewParent.ItemsSource = reCard;
-                            ListViewParent.ScrollIntoView(ListViewParent.Items[0]);
-                        }
-                        if (CheckBoxGene.IsChecked == true)
-                        {//按基因型查父本
-                            Gene a1 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA1.SelectedItem.ToString());
-                            Gene a2 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA2.SelectedItem.ToString());
-                            Gene a3 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA3.SelectedItem.ToString());
-                            Gene a4 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA4.SelectedItem.ToString());
-                            MyFlower f = new MyFlower(SelectedFlower, a1, a2, a3, a4);
-                            var re = FlowerHelper.GetMyParent(f);
-                            ObservableCollection<ParentCard> reCard = new ObservableCollection<ParentCard>();
-                            foreach (var a in re)
+                            foreach (var a in ListColorDic)
                             {
-                                reCard.Add(new ParentCard(a));
+                                if (f.GetGeneName() == a.GetGeneName()) ParentL.Add(a);
                             }
-                            ListViewParent.ItemsSource = reCard;
-                            ListViewParent.ScrollIntoView(ListViewParent.Items[0]);
                         }
+                        if (CheckBoxGeneR.IsChecked == true)
+                        {//按基因型R
+                            Gene a1 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA1R.SelectedItem.ToString());
+                            Gene a2 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA2R.SelectedItem.ToString());
+                            Gene a3 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA3R.SelectedItem.ToString());
+                            Gene a4 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA4R.SelectedItem.ToString());
+                            MyFlower f = new MyFlower(SelectedFlower, a1, a2, a3, a4);
+                            foreach (var i in f.GetIntArray())
+                            {
+                                if (i == 0)
+                                {
+                                    GlobalTool.OpenDialogButton("没有选择基因型");
+                                    return;
+                                }
+                            }
+                            foreach (var a in ListColorDic)
+                            {
+                                if (f.GetGeneName() == a.GetGeneName()) ParentR.Add(a);
+                            }
+                        }
+                        if (CheckBoxSeedL.IsChecked == true)
+                        {//按种子L
+                            int index = ComboBoxSeedL.SelectedIndex;
+                            if (index == 0)
+                            {
+                                GlobalTool.OpenDialogButton("没有选择种子");
+                                return;
+                            }
+                            ParentL.Add(ListSeed[index - 1]);
+                        }
+                        if (CheckBoxSeedR.IsChecked == true)
+                        {//按种子L
+                            int index = ComboBoxSeedR.SelectedIndex;
+                            if (index == 0)
+                            {
+                                GlobalTool.OpenDialogButton("没有选择种子");
+                                return;
+                            }
+                            ParentR.Add(ListSeed[index - 1]);
+                        }
+
+                        ObservableCollection<ChildCard> result = new ObservableCollection<ChildCard>();
+                        foreach (var L in ParentL)
+                        {
+                            foreach(var R in ParentR)
+                            {
+                                var children = FlowerHelper.GetOurChildren(L, R);
+                                foreach(var child in children)
+                                {
+                                    var childcard = new ChildCard(L, R, child, FlowerHelper.GetProbability(L, R, child));
+                                    bool isinList = false;
+                                    foreach (var a in result)
+                                    {
+                                        if (
+                                            (
+                                            childcard.Gene == a.Gene &&
+                                            childcard.GeneP1 == a.GeneP1 &&
+                                            childcard.GeneP2 == a.GeneP2
+                                            )
+                                            ||
+                                            (
+                                            childcard.Gene == a.Gene &&
+                                            childcard.GeneP2 == a.GeneP1 &&
+                                            childcard.GeneP1 == a.GeneP2
+                                            )
+                                            ) isinList = true;
+                                    }
+                                    if (!isinList) result.Add(childcard);
+                                }
+                            }
+                        }
+                        ListViewChildren.ItemsSource = result;
+                        ListViewChildren.ScrollIntoView(ListViewChildren.Items[0]);
                     }
                     break;
             }
