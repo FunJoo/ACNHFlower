@@ -31,7 +31,6 @@ namespace AnimalCrossingFlower.Helper
             }
             catch
             {
-                GlobalTool.OpenDialogButton("flower.json 文件读取失败！");
                 return new List<MyFlower>();
             }
         }

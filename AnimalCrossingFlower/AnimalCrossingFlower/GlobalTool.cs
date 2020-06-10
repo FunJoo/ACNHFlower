@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace AnimalCrossingFlower
@@ -33,11 +34,17 @@ namespace AnimalCrossingFlower
         /// 打开Progress消息框
         /// </summary>
         /// <param name="msg">要显示的消息</param>
-        public static void OpenDialogProgress(string msg)
+        private static void ODP(string msg)
         {
             DialogMessage = msg;
             DHRoot.DialogContent = new DialogProgress();
             DHRoot.IsOpen = true;
+        }
+
+        public static void OpenDialogProgress(FrameworkElement page, string msg)
+        {
+            Action<string> updateAction = new Action<string>(ODP);
+            page.Dispatcher.BeginInvoke(updateAction, msg);
         }
 
         /// <summary>
@@ -50,15 +57,27 @@ namespace AnimalCrossingFlower
             DHRoot.DialogContent = null;
         }
 
+        public static void CloseDialog(FrameworkElement page)
+        {
+            Action updateAction = new Action(CloseDialogProgress);
+            page.Dispatcher.BeginInvoke(updateAction);
+        }
+
         /// <summary>
         /// 打开带按钮的消息框
         /// </summary>
         /// <param name="msg">消息</param>
-        public static void OpenDialogButton(string msg)
+        private static void ODB(string msg)
         {
             DialogMessage = msg;
             DHRoot.DialogContent = new DialogButton();
             DHRoot.IsOpen = true;
+        }
+
+        public static void OpenDialogButton(FrameworkElement page, string msg)
+        {
+            Action<string> updateAction = new Action<string>(ODB);
+            page.Dispatcher.BeginInvoke(updateAction, msg);
         }
 
         /// <summary>
@@ -79,5 +98,103 @@ namespace AnimalCrossingFlower
 
         #endregion
 
+        #region PageZajiao.xaml
+
+        public static bool BoolColorL;
+        public static bool BoolColorR;
+        public static bool BoolGeneL;
+        public static bool BoolGeneR;
+        public static bool BoolSeedL;
+        public static bool BoolSeedR;
+
+        public static int IndexColorL;
+        public static int IndexColorR;
+
+        public static int IndexSeedL;
+        public static int IndexSeedR;
+
+        public static string ItemA1L = "Unknown";
+        public static string ItemA2L = "Unknown";
+        public static string ItemA3L = "Unknown";
+        public static string ItemA4L = "Unknown";
+
+        public static string ItemA1R = "Unknown";
+        public static string ItemA2R = "Unknown";
+        public static string ItemA3R = "Unknown";
+        public static string ItemA4R = "Unknown";
+
+        public static string ButtonName;
+
+        public static void ChangeZajiaoComboBox(object sender)
+        {
+            var s = sender as ComboBox;
+            switch (s.Name)
+            {
+                case "ComboBoxColorL":
+                    IndexColorL = s.SelectedIndex;
+                    break;
+                case "ComboBoxColorR":
+                    IndexColorR = s.SelectedIndex;
+                    break;
+                case "ComboBoxA1L":
+                    ItemA1L = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxA2L":
+                    ItemA2L = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxA3L":
+                    ItemA3L = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxA4L":
+                    ItemA4L = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxA1R":
+                    ItemA1R = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxA2R":
+                    ItemA2R = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxA3R":
+                    ItemA3R = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxA4R":
+                    ItemA4R = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxSeedL":
+                    IndexSeedL = s.SelectedIndex;
+                    break;
+                case "ComboBoxSeedR":
+                    IndexSeedR = s.SelectedIndex;
+                    break;
+            }
+        }
+
+        public static void ChangeZajiaoCheckBox(object sender)
+        {
+            var s = sender as CheckBox;
+            switch (s.Name)
+            {
+                case "CheckBoxColorL":
+                    BoolColorL = s.IsChecked.Value;
+                    break;
+                case "CheckBoxColorR":
+                    BoolColorR = s.IsChecked.Value;
+                    break;
+                case "CheckBoxGeneL":
+                    BoolGeneL = s.IsChecked.Value;
+                    break;
+                case "CheckBoxGeneR":
+                    BoolGeneR = s.IsChecked.Value;
+                    break;
+                case "CheckBoxSeedL":
+                    BoolSeedL = s.IsChecked.Value;
+                    break;
+                case "CheckBoxSeedR":
+                    BoolSeedR = s.IsChecked.Value;
+                    break;
+            }
+        }
+
+        #endregion
     }
 }

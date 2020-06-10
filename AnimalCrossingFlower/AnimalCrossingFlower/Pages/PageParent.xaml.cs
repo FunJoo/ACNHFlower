@@ -212,7 +212,7 @@ namespace AnimalCrossingFlower.Pages
                         {//按颜色查父本
                             if (ComboBoxColor.SelectedIndex == 0)
                             {
-                                GlobalTool.OpenDialogButton("没有选择颜色");
+                                GlobalTool.OpenDialogButton(this, "没有选择颜色");
                                 return;
                             }
                             if (SelectedColorDic == null || SelectedColorDic.Count == 0) return;

@@ -183,7 +183,7 @@ namespace AnimalCrossingFlower
             {
                 case "MenuItemAbout":
                     GlobalTool.OpenDialogButton
-                        (
+                        ( this,
                         "Flower\nAnimal Crossing : New Horizons\n"
                         + Application.ResourceAssembly.GetName().Version.ToString()
                         + "\n\n作者 FunJoo\n开源 https://gitee.com/funjoo/ACNHFlower/ "
