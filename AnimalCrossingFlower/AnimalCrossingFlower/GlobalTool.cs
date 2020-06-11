@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,6 +48,12 @@ namespace AnimalCrossingFlower
             page.Dispatcher.BeginInvoke(updateAction, msg);
         }
 
+        public static void OpenDialogProgress(TaskScheduler ts, string msg)
+        {
+            Task.Factory.StartNew(() => ODP(msg),
+                    new CancellationTokenSource().Token, TaskCreationOptions.None, ts).Wait();
+        }
+
         /// <summary>
         /// 关闭Progress消息框
         /// </summary>
@@ -61,6 +68,12 @@ namespace AnimalCrossingFlower
         {
             Action updateAction = new Action(CloseDialogProgress);
             page.Dispatcher.BeginInvoke(updateAction);
+        }
+
+        public static void CloseDialog(TaskScheduler ts)
+        {
+            Task.Factory.StartNew(() => CloseDialogProgress(),
+                    new CancellationTokenSource().Token, TaskCreationOptions.None, ts).Wait();
         }
 
         /// <summary>
@@ -78,6 +91,12 @@ namespace AnimalCrossingFlower
         {
             Action<string> updateAction = new Action<string>(ODB);
             page.Dispatcher.BeginInvoke(updateAction, msg);
+        }
+
+        public static void OpenDialogButton(TaskScheduler ts, string msg)
+        {
+            Task.Factory.StartNew(() => ODB(msg),
+                    new CancellationTokenSource().Token, TaskCreationOptions.None, ts).Wait();
         }
 
         /// <summary>
@@ -123,7 +142,7 @@ namespace AnimalCrossingFlower
         public static string ItemA3R = "Unknown";
         public static string ItemA4R = "Unknown";
 
-        public static string ButtonName;
+        public static string ButtonNameZajiao;
 
         public static void ChangeZajiaoComboBox(object sender)
         {
@@ -196,5 +215,58 @@ namespace AnimalCrossingFlower
         }
 
         #endregion
-    }
+
+        #region PageParent.xaml
+
+        public static bool BoolColor;
+        public static bool BoolGene;
+
+        public static int IndexColor;
+
+        public static string ItemA1 = "Unknown";
+        public static string ItemA2 = "Unknown";
+        public static string ItemA3 = "Unknown";
+        public static string ItemA4 = "Unknown";
+
+        public static string ButtonNameParent;
+
+        public static void ChangeParentComboBox(object sender)
+        {
+            var s = sender as ComboBox;
+            switch (s.Name)
+            {
+                case "ComboBoxColor":
+                    IndexColor = s.SelectedIndex;
+                    break;
+                case "ComboBoxA1":
+                    ItemA1 = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxA2":
+                    ItemA2 = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxA3":
+                    ItemA3 = s.SelectedItem.ToString();
+                    break;
+                case "ComboBoxA4":
+                    ItemA4 = s.SelectedItem.ToString();
+                    break;
+            }
+        }
+
+        public static void ChangeParentCheckBox(object sender)
+        {
+            var s = sender as CheckBox;
+            switch (s.Name)
+            {
+                case "CheckBoxColor":
+                    BoolColor = s.IsChecked.Value;
+                    break;
+                case "CheckBoxGene":
+                    BoolGene = s.IsChecked.Value;
+                    break;
+            }
+        }
+
+            #endregion
+        }
 }

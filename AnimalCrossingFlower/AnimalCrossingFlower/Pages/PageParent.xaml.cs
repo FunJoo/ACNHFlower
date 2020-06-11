@@ -1,10 +1,12 @@
 ﻿using AnimalCrossingFlower.Helper;
 using AnimalCrossingFlower.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,6 +32,9 @@ namespace AnimalCrossingFlower.Pages
             BindFlower();
             BindGene();
         }
+
+        private readonly TaskScheduler _syncContextTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+
         /// <summary>
         /// 设置了哪种花朵
         /// </summary>
@@ -86,6 +91,8 @@ namespace AnimalCrossingFlower.Pages
         private void GroupChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cb = sender as ComboBox;
+
+            GlobalTool.ChangeParentComboBox(sender);
 
             string senderName = cb.Name;
             switch (senderName)
@@ -203,20 +210,41 @@ namespace AnimalCrossingFlower.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string senderName = (sender as Button).Name;
-            switch (senderName)
+            GlobalTool.ButtonNameParent = (sender as Button).Name;
+            Task.Factory.StartNew(SchedulerWork);
+        }
+
+        private void SchedulerWork()
+        {
+            Task.Factory.StartNew(() => GlobalTool.OpenDialogProgress(_syncContextTaskScheduler, "加载中")).Wait();
+            Task.Factory.StartNew(B_Click).Wait();
+        }
+
+        private void ShowData(IEnumerable data)
+        {
+            ListViewParent.ItemsSource = data;
+            ListViewParent.ScrollIntoView(ListViewParent.Items[0]);
+
+            new Task(() => GlobalTool.CloseDialog(this)).Start();
+        }
+
+        private void B_Click()
+        {
+            switch (GlobalTool.ButtonNameParent)
             {
                 case "ButtonSearch":
                     {
-                        if (CheckBoxColor.IsChecked == true)
+                        ObservableCollection<ParentCard> reCard = new ObservableCollection<ParentCard>();
+
+                        if (GlobalTool.BoolColor == true)
                         {//按颜色查父本
-                            if (ComboBoxColor.SelectedIndex == 0)
+                            if (GlobalTool.IndexColor == 0)
                             {
-                                GlobalTool.OpenDialogButton(this, "没有选择颜色");
+                                GlobalTool.OpenDialogButton(_syncContextTaskScheduler, "没有选择颜色");
                                 return;
                             }
                             if (SelectedColorDic == null || SelectedColorDic.Count == 0) return;
-                            ObservableCollection<ParentCard> reCard = new ObservableCollection<ParentCard>();
+                            
                             foreach (var everyflower in SelectedColorDic)
                             {
                                 var parent = FlowerHelper.GetMyParent(everyflower);
@@ -231,25 +259,24 @@ namespace AnimalCrossingFlower.Pages
                                     if (!inResult) reCard.Add(aa);
                                 }
                             }
-                            ListViewParent.ItemsSource = reCard;
-                            ListViewParent.ScrollIntoView(ListViewParent.Items[0]);
                         }
-                        if(CheckBoxGene.IsChecked == true)
+                        if(GlobalTool.BoolGene == true)
                         {//按基因型查父本
-                            Gene a1 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA1.SelectedItem.ToString());
-                            Gene a2 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA2.SelectedItem.ToString());
-                            Gene a3 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA3.SelectedItem.ToString());
-                            Gene a4 = (Gene)Enum.Parse(typeof(Gene), ComboBoxA4.SelectedItem.ToString());
+                            Gene a1 = (Gene)Enum.Parse(typeof(Gene), GlobalTool.ItemA1);
+                            Gene a2 = (Gene)Enum.Parse(typeof(Gene), GlobalTool.ItemA2);
+                            Gene a3 = (Gene)Enum.Parse(typeof(Gene), GlobalTool.ItemA3);
+                            Gene a4 = (Gene)Enum.Parse(typeof(Gene), GlobalTool.ItemA4);
                             MyFlower f = new MyFlower(SelectedFlower, a1, a2, a3, a4);
                             var re = FlowerHelper.GetMyParent(f);
-                            ObservableCollection<ParentCard> reCard = new ObservableCollection<ParentCard>();
+
                             foreach(var a in re)
                             {
                                 reCard.Add(new ParentCard(a));
                             }
-                            ListViewParent.ItemsSource = reCard;
-                            ListViewParent.ScrollIntoView(ListViewParent.Items[0]);
                         }
+
+                        Task.Factory.StartNew(() => ShowData(reCard),
+                                new CancellationTokenSource().Token, TaskCreationOptions.None, _syncContextTaskScheduler).Wait();
                     }
                     break;
             }
@@ -257,6 +284,8 @@ namespace AnimalCrossingFlower.Pages
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
+            GlobalTool.ChangeParentCheckBox(sender);
+
             CheckBox cb = sender as CheckBox;
             if (cb.IsChecked == false) return;
             string senderName = cb.Name;

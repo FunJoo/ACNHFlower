@@ -367,7 +367,7 @@ namespace AnimalCrossingFlower.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            GlobalTool.ButtonName = (sender as Button).Name;
+            GlobalTool.ButtonNameZajiao = (sender as Button).Name;
             Task.Factory.StartNew(SchedulerWork);
         }
 
@@ -392,7 +392,7 @@ namespace AnimalCrossingFlower.Pages
 
         private void B_Click()
         {
-            switch (GlobalTool.ButtonName)
+            switch (GlobalTool.ButtonNameZajiao)
             {
                 case "ButtonSearch":
                     {

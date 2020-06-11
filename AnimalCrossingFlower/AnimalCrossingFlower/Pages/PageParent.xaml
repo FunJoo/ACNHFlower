@@ -182,7 +182,8 @@
                                   Margin="0,5,0,0"
                                   Style="{StaticResource MaterialDesignCheckBox}"
                                   Content="按颜色查父本"
-                                  Checked="CheckBox_Checked"/>
+                                  Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Checked"/>
                         <ComboBox x:Name="ComboBoxColor"
                                   materialDesign:HintAssist.Hint="选择颜色"
                                   IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxColor}"
@@ -193,7 +194,8 @@
                                   Margin="0,5,0,0"
                                   Style="{StaticResource MaterialDesignCheckBox}"
                                   Content="按基因型查父本"
-                                  Checked="CheckBox_Checked"/>
+                                  Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Checked"/>
                         <TextBlock Text="可部分留空"
                                    FontSize="10"
                                    Foreground="Gray"

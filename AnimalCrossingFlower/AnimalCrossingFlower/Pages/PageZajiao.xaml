@@ -187,7 +187,8 @@
                                   HorizontalAlignment="Center"
                                   Style="{StaticResource MaterialDesignCheckBox}"
                                   Content="按颜色"
-                                  Checked="CheckBox_Checked"/>
+                                  Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Checked"/>
                         <ComboBox x:Name="ComboBoxColorL"
                                   materialDesign:HintAssist.Hint="选择颜色"
                                   IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxColorL}"
@@ -200,7 +201,8 @@
                                   HorizontalAlignment="Center"
                                   Style="{StaticResource MaterialDesignCheckBox}"
                                   Content="按基因型"
-                                  Checked="CheckBox_Checked"/>
+                                  Checked="CheckBox_Checked"
+                                      Unchecked="CheckBox_Checked"/>
                         </StackPanel>
                         
                         <Grid x:Name="GridGeneL">
@@ -244,7 +246,8 @@
                                   HorizontalAlignment="Center"
                                   Style="{StaticResource MaterialDesignCheckBox}"
                                   Content="按种子"
-                                  Checked="CheckBox_Checked"/>
+                                  Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Checked"/>
                         <ComboBox x:Name="ComboBoxSeedL"
                                   materialDesign:HintAssist.Hint="选择颜色"
                                   IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxSeedL}"
@@ -260,7 +263,8 @@
                                   HorizontalAlignment="Center"
                                   Style="{StaticResource MaterialDesignCheckBox}"
                                   Content="按颜色"
-                                  Checked="CheckBox_Checked"/>
+                                  Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Checked"/>
                         <ComboBox x:Name="ComboBoxColorR"
                                   materialDesign:HintAssist.Hint="选择颜色"
                                   IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxColorR}"
@@ -273,7 +277,8 @@
                                   HorizontalAlignment="Center"
                                   Style="{StaticResource MaterialDesignCheckBox}"
                                   Content="按基因型"
-                                  Checked="CheckBox_Checked"/>
+                                  Checked="CheckBox_Checked"
+                                      Unchecked="CheckBox_Checked"/>
                         </StackPanel>
                         <Grid x:Name="GridGeneR">
                             <Grid.ColumnDefinitions>
@@ -315,7 +320,8 @@
                                   HorizontalAlignment="Center"
                                   Style="{StaticResource MaterialDesignCheckBox}"
                                   Content="按种子"
-                                  Checked="CheckBox_Checked"/>
+                                  Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Checked"/>
                         <ComboBox x:Name="ComboBoxSeedR"
                                   materialDesign:HintAssist.Hint="选择颜色"
                                   IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxSeedR}"
