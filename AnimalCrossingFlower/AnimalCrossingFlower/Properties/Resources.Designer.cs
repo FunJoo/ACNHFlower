@@ -22,7 +22,7 @@ namespace AnimalCrossingFlower.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace AnimalCrossingFlower.Properties {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AnimalCrossingFlower.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace AnimalCrossingFlower.Properties {
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,9 +63,9 @@ namespace AnimalCrossingFlower.Properties {
         /// <summary>
         ///   查找类似 [{&quot;id&quot;:&quot;1&quot;,&quot;type&quot;:&quot;Lilies&quot;,&quot;color&quot;:&quot;Unknown&quot;,&quot;a1&quot;:&quot;2&quot;,&quot;a2&quot;:&quot;2&quot;,&quot;a3&quot;:&quot;2&quot;,&quot;a4&quot;:null,&quot;note&quot;:&quot;百合花&quot;,&quot;isseed&quot;:&quot;0&quot;,&quot;pairs&quot;:&quot;3&quot;},{&quot;id&quot;:&quot;2&quot;,&quot;type&quot;:&quot;Lilies&quot;,&quot;color&quot;:&quot;Unknown&quot;,&quot;a1&quot;:&quot;3&quot;,&quot;a2&quot;:&quot;3&quot;,&quot;a3&quot;:&quot;3&quot;,&quot;a4&quot;:null,&quot;note&quot;:&quot;百合花&quot;,&quot;isseed&quot;:&quot;0&quot;,&quot;pairs&quot;:&quot;3&quot;},{&quot;id&quot;:&quot;3&quot;,&quot;type&quot;:&quot;Lilies&quot;,&quot;color&quot;:&quot;Unknown&quot;,&quot;a1&quot;:&quot;2&quot;,&quot;a2&quot;:&quot;2&quot;,&quot;a3&quot;:&quot;3&quot;,&quot;a4&quot;:null,&quot;note&quot;:&quot;百合花&quot;,&quot;isseed&quot;:&quot;0&quot;,&quot;pairs&quot;:&quot;3&quot;},{&quot;id&quot;:&quot;4&quot;,&quot;type&quot;:&quot;Lilies&quot;,&quot;color&quot;:&quot;... 的本地化字符串。
         /// </summary>
-        public static string Flower_v1 {
+        internal static string flower_v2 {
             get {
-                return ResourceManager.GetString("Flower_v1", resourceCulture);
+                return ResourceManager.GetString("flower_v2", resourceCulture);
             }
         }
     }

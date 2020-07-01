@@ -26,7 +26,7 @@ namespace AnimalCrossingFlower.Helper
 
                 //这个类需要添加引用：System.Web.Extensions
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                var myresult = serializer.Deserialize<List<MyFlower>>(Resources.Flower_v1);
+                var myresult = serializer.Deserialize<List<MyFlower>>(Resources.flower_v2);
                 return myresult;
             }
             catch
